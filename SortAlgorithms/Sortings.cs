@@ -80,7 +80,6 @@ namespace SortAlgorithms
         {
             if (arr != null)
             {
-
                 for (int i = 1; i < arr.Length; i++)
                 {
                     var temp = arr[i];
@@ -99,6 +98,57 @@ namespace SortAlgorithms
                 return default(int[]);
             }
         }
+
+        public IEnumerable<int> SelectionSorting()
+        {
+            if (arr != null)
+            {
+                for (int i = 0; i < arr.Length - 1; i++)
+                {
+                    var min = i;
+                    for (int j = min + 1; j < arr.Length; j++)
+                    {
+                        if (arr[j] < arr[min])
+                        {
+                            min = j;
+                        }
+                    }
+                    Swap(i, min);
+                }
+                return arr;
+            }
+            else
+            {
+                return default(int[]);
+            }
+        }
+
+        public IEnumerable<int> ShellSorting()
+        {
+            if (arr != null)
+            {
+                var step = arr.Length / 2;
+                while (step > 0)
+                {
+                    for (int i = step; i < arr.Length; i++)
+                    {
+                        var j = i;
+                        while (j >= step && arr[j - step] > arr[j])
+                        {
+                            Swap(j, j - step);
+                            j = j - step;
+                        }
+                    }
+                    step /= 2;
+                }
+                return arr;
+            }
+            else
+            {
+                return default(int[]);
+            }
+        }
+
 
         private void Swap(int k, int v)
         {
