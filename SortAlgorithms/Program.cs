@@ -12,7 +12,10 @@ namespace SortAlgorithms
             // var result = sorting.ShakerSorting();
             // var result = sorting.InsertSorting();
             // var result = sorting.SelectionSorting();
-            var result = sorting.ShellSorting();
+            //  var result = sorting.ShellSorting();
+            //  var result = sorting.TreeSorting();
+            // var result = sorting.HeapSorting();
+            var result = sorting.MergeSorting();
             foreach (var item in result)
             {
                 Console.WriteLine(item);

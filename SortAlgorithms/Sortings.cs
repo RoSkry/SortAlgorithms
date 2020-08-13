@@ -1,4 +1,5 @@
-﻿using System;
+﻿using SortAlgorithms.DataStructures;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -148,6 +149,81 @@ namespace SortAlgorithms
                 return default(int[]);
             }
         }
+
+        public IEnumerable<int> TreeSorting()
+        {
+            var tree = new Tree<int>(arr);
+            var sortedArr = tree.InOrder();
+            return sortedArr;
+        }
+
+        public IEnumerable<int> HeapSorting()
+        {
+            var heap = new Heap<int>(arr);
+            var sortedArr = heap.Order();
+            return sortedArr;
+        }
+
+        public IEnumerable<int> MergeSorting()
+        {
+            return Sort(arr.ToList());
+        }
+
+        private List<int> Sort(List<int> collection)
+        {
+            if (collection.Count() == 1)
+            {
+                return collection;
+            }
+            var mid = collection.Count() / 2;
+
+            var left = collection.Take(mid).ToList();
+            var right = collection.Skip(mid).ToList(); ;
+
+            return Merge(Sort(left), Sort(right));
+        }
+
+        private List<int> Merge(List<int> left, List<int> right)
+        {
+            var length = left.Count() + right.Count();
+            var leftPointer = 0;
+            var rightPointer = 0;
+
+            var result = new List<int>();
+
+            for (int i = 0; i < length; i++)
+            {
+                if (leftPointer < left.Count() && rightPointer < right.Count())
+                {
+                    if (right[rightPointer] > left[leftPointer])
+                    {
+                        result.Add(left[leftPointer]);
+                        leftPointer++;
+                    }
+                    else
+                    {
+                        result.Add(right[rightPointer]);
+                        rightPointer++;
+                    }
+                }
+                else
+                {
+                    if (rightPointer < right.Count())
+                    {
+                        result.Add(right[rightPointer]);
+                        rightPointer++;
+                    }
+                    else
+                    {
+                        result.Add(left[leftPointer]);
+                        leftPointer++;
+                    }
+                }
+            }
+
+            return result;
+        }
+
 
 
         private void Swap(int k, int v)
