@@ -224,7 +224,57 @@ namespace SortAlgorithms
             return result;
         }
 
+        public IEnumerable<int> RadixSort()
+        {
+            var groups = new List<List<int>>();
+            for (int i = 0; i < 10; i++)
+            {
+                groups.Add(new List<int>());
+            }
 
+            var length = GetMaxLength();
+
+            // Распределение элементов по корзинам. 
+            for (int i = 0; i < length; i++)
+            {
+                for (int j = 0; j < arr.Length; j++)
+                {
+                    int temp = (arr[j] % (int)Math.Pow(10, i + 1)) / (int)Math.Pow(10, i);
+                    groups[temp].Add(arr[j]);
+                }
+
+                // Сборка элементов.
+                var k = 0;
+                for (int ii = 0; ii < 10; ii++)
+                {
+                    for (int j = 0; j < groups[ii].Count; j++)
+                    {
+                        arr[k++] = (int)groups[ii][j];
+                    }
+                }
+
+                for (int i1 = 0; i1 < 10; i1++)
+                {
+                    groups[i1].Clear();
+                }
+            }
+            return arr;
+        }
+
+        private int GetMaxLength()
+        {
+            int length = 0;
+            foreach (var item in arr)
+            {
+                var itemLenght = Convert.ToInt32(Math.Log10(item));
+                if (itemLenght > length)
+                {
+                    length = itemLenght;
+                }
+            }
+
+            return length;
+        }
 
         private void Swap(int k, int v)
         {
