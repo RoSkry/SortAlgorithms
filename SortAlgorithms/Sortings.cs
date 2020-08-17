@@ -224,6 +224,67 @@ namespace SortAlgorithms
             return result;
         }
 
+        public IEnumerable<int> GnomeSort()
+        {
+            var index = 1;
+            var nextIndex = index + 1;
+            while (index < arr.Length)
+            {
+                if (arr[index - 1] < arr[index])
+                {
+                    index = nextIndex;
+                    nextIndex++;
+                }
+                else
+                {
+                    Swap(index - 1, index);
+                    index--;
+                    if (index == 0)
+                    {
+                        index = nextIndex;
+                        nextIndex++;
+                    }
+                }
+            }
+            return arr;
+        }
+
+        public IEnumerable<int> QuickSort()
+        {
+            Qsort(0, arr.Length - 1);
+            return arr;
+        }
+
+        private void Qsort(int left, int right)
+        {
+            if (left >= right)
+            {
+                return;
+            }
+
+            var pivot = Sorting(left, right);
+            Qsort(left, pivot - 1);
+            Qsort(pivot + 1, right);
+        }
+
+        private int Sorting(int left, int right)
+        {
+            var pointer = left;
+
+            //Оппорный елемент находиться под right-адрессом
+            for (int i = left; i <= right; i++)
+            {
+                if (arr[i] < arr[right])
+                {
+                    Swap(pointer, i);
+                    pointer++;
+                }
+            }
+
+            Swap(pointer, right);
+            return pointer;
+        }
+
         public IEnumerable<int> RadixSort()
         {
             var groups = new List<List<int>>();
